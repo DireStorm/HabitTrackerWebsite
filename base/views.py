@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 # Create your views here.
 
@@ -7,7 +6,7 @@ from django.http import HttpResponse
 
 #These are just for practice (you typically don't want to create views - renderings - in the urls file)
 def home(request):
-    return HttpResponse("<h1>Jerin's Home Page</h1>")
+    return render(request, 'home.html')
 
 def room(request):
-    return HttpResponse("<p1>This is a ROOM sub url</p1>")
+    return render(request, 'room.html')
