@@ -1,16 +1,22 @@
-from django.shortcuts import render
+#from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view #decorator import
-from .models import UInfo
-from .serializers import UInfoSerializer
+#from .models import UInfo
+#from .serializers import UInfoSerializer
 
 # Create your views here.
 
 #Function Based Views
 
+#Method to store all end points
+@api_view(['GET'])
+def getRoutes(request):
+    routes = [
+        '/api/token',
+        '/api/token/refresh',
+    ]
 
-
-
+    return Response(routes)
 
 
 

@@ -18,5 +18,6 @@ from django.urls import path, include #include allows us to reference urls in ot
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('base.urls'))
+    path('api/', include('base.urls')),
+    # path('', include('base.urls'))
 ]
