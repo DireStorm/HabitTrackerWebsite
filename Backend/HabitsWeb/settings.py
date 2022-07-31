@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     
     'rest_framework',
-    'rest_framework_simplejwt.token_blacklist', #migrate so a database model is created to store blacklisted tokens
+    'rest_framework_simplejwt.token_blacklist', #migrate so a database model is created to store blacklisted tokens, you can find the database model in admin panel
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -85,6 +86,9 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    
+    'corsheaders.middleware.CorsMiddleware', #you want this above any middleware with responses, so it can intercept between backend and frontend websites
+    
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -165,3 +169,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+################################### IMPORTANT ##################################################
+#   When you actually setup the website configure CORS with CORS_ALLOWED_ORIGINS
+#   It's unsafe to allow all origns to access your backend obviously
+CORS_ALLOW_ALL_ORIGINS = True
