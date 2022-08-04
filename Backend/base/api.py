@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 class RegisterApi(generics.GenericAPIView):
     serializer_class = RegisterSerializer
     
+    ########## IMPORTANT, since there are args that can be passed through any optional values for registration needs to be passed in at the end of the json file
     def post(self, request, *args,  **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
