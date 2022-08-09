@@ -1,11 +1,13 @@
 #from django.shortcuts import render
 from rest_framework.response import Response
-from rest_framework.decorators import api_view #decorator import
-#from .models import UInfo
-#from .serializers import UInfoSerializer
+from rest_framework.decorators import api_view #, permission_classes #decorator import
+# from rest_framework.permissions import IsAuthenticated
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+
+# from .serializer import HabitSerializer
+# from .models import Habit
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -35,8 +37,13 @@ def getRoutes(request):
 
     return Response(routes)
 
-
-
+# @api_view(['PUT'])
+# # @permission_classes([IsAuthenticated]) #Creates a protected route, so have to be authenticated to access this info
+# def getHabits(request):
+#     user = request.user
+#     habits = user.habit_set.all() #You will need Habit.objects.all() when creating the leaderboard
+#     serializer = HabitSerializer(habits, many=True)
+#     return Response(serializer.data)
 
 
 

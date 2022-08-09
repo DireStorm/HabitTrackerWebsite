@@ -6,6 +6,15 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 
 
+# from rest_framework.serializers import ModelSerializer
+# from .models import Habit
+
+#Habits Serializer
+# class HabitSerializer(ModelSerializer):
+#     class Meta:
+#         model = Habit
+#         fields = '__all__'
+
 # Register serializer
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
