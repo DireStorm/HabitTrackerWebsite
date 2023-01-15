@@ -6,8 +6,13 @@ from rest_framework.decorators import api_view #, permission_classes #decorator 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-# from .serializer import HabitSerializer
-# from .models import Habit
+from .models import Profile
+from .serializer import ProfileSerializer
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from django.http import HttpResponse, JsonResponse
+
+
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -36,6 +41,54 @@ def getRoutes(request):
     ]
 
     return Response(routes)
+
+
+@csrf_exempt
+def profile_list(request):
+    """
+    List all code snippets, or create a new snippet.
+    """
+    if request.method == 'GET':
+        profiles = Profile.objects.all()
+        serializer = ProfileSerializer(profiles, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = ProfileSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
+
+
+@csrf_exempt
+def profile_details(request, pk):
+    """
+    Retrieve, update or delete a code snippet.
+    """
+    try:
+        profile = Profile.objects.get(pk=pk)
+    except Profile.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = ProfileSerializer(profile)
+        return JsonResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = ProfileSerializer(profile, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=400)
+
+    elif request.method == 'DELETE':
+        profile.delete()
+        return HttpResponse(status=204)
+
+
 
 # @api_view(['PUT'])
 # # @permission_classes([IsAuthenticated]) #Creates a protected route, so have to be authenticated to access this info
